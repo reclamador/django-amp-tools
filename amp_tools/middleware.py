@@ -1,10 +1,15 @@
+# make it compatible to django 1.10
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    MiddlewareMixin = object
 import re
 
 from amp_tools.settings import settings
 from amp_tools import set_amp_detect
 
 
-class AMPDetectionMiddleware(object):
+class AMPDetectionMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
         if settings.AMP_TOOLS_GET_PARAMETER in request.GET:
