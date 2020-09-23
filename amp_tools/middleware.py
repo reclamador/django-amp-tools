@@ -16,7 +16,8 @@ class AMPDetectionMiddleware(MiddlewareMixin):
             if request.GET[settings.AMP_TOOLS_GET_PARAMETER] == settings.AMP_TOOLS_GET_VALUE:
                 if settings.AMP_TOOLS_ACTIVE_URLS:
                     for url in settings.AMP_TOOLS_ACTIVE_URLS:
-                        if not isinstance(url, re._pattern_type):
+                        pattern_type = re._pattern_type if hasattr(re, '_pattern_type') else re.Pattern
+                        if not isinstance(url, pattern_type):
                             url = str(url)
                         url_re = re.compile(url)
 
